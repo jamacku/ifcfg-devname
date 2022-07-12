@@ -6,7 +6,7 @@ use mac_address::{mac_address_by_name, MacAddress};
 use lazy_static::lazy_static;
 use regex::Regex;
 
-/* Check if new devname is equal to kernel standard devname (eth0, etc.) */
+/// `is_like_kernel_name` checks if new devname is equal to kernel standard devname (`eth0`, etc.)
 pub fn is_like_kernel_name(new_devname: &str) -> bool {
     lazy_static! {
         /* Check if new devname is equal to kernel standard devname (eth0, etc.)
@@ -26,6 +26,9 @@ pub fn is_like_kernel_name(new_devname: &str) -> bool {
     }
 }
 
+/// `is_test_mode` checks if `ifcfg-devname` is running in test environment
+/// 
+/// It is determined based on number of arguments passed
 pub fn is_test_mode(params: &Vec<String>, number_params_required: usize) -> bool {
     if params.len() >= number_params_required {
         true
@@ -34,6 +37,8 @@ pub fn is_test_mode(params: &Vec<String>, number_params_required: usize) -> bool
     }
 }
 
+
+/// 
 pub fn get_mac_address(is_test_mode: bool, args: &Vec<String>, index: usize, kernel_name: &String) -> Result<MacAddress, Box<dyn error::Error>> {
     let mac_address = if is_test_mode {
         let mac_address = args[index].clone();
